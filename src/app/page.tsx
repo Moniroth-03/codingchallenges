@@ -1,5 +1,6 @@
-"useClient";
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Layout from "./layout";
 
 interface Todo {
@@ -9,9 +10,16 @@ interface Todo {
   createdAt: string;
 }
 
-const Home: React.FC = () => {
+const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    // Fetch initial todos from the API
+    fetch("/api/todo")
+      .then((response) => response.json())
+      .then((data) => setTodos(data));
+  }, []);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim()) {
@@ -43,4 +51,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default TodoList;
