@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import Layout from './layout';
+"useClient";
+import React, { useState } from "react";
+import Layout from "./layout";
 
 interface Todo {
   id: string;
@@ -10,24 +11,24 @@ interface Todo {
 
 const Home: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
+    if (e.key === "Enter" && inputValue.trim()) {
       const newTodo: Todo = {
         id: Date.now().toString(),
         todo: inputValue,
         isCompleted: false,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       };
       setTodos([...todos, newTodo]);
-      setInputValue('');
+      setInputValue("");
     }
   };
 
   return (
     <Layout>
-      <input 
+      <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
@@ -35,9 +36,7 @@ const Home: React.FC = () => {
       />
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.todo}
-          </li>
+          <li key={todo.id}>{todo.todo}</li>
         ))}
       </ul>
     </Layout>
