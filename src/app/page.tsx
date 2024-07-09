@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+"use client";import React, { useState } from "react";
 import Layout from "./layout";
 
 interface Todo {
