@@ -1,6 +1,8 @@
 "use client";
-"use client";import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import Layout from "./layout";
+import axios from "axios";
 
 interface Todo {
   id: string;
@@ -13,6 +15,20 @@ const Home: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch the existing todos from the API
+    const fetchTodos = async () => {
+      try {
+        const response = await axios.get("/api/todo");
+        setTodos(response.data.todos); // Assuming the API returns an array of todos
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+      }
+    };
+
+    fetchTodos();
+  }, []);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim()) {
@@ -56,8 +72,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <div>
+      <h3>made by EK MONIROTH</h3>
       <input
+        placeholder="Enter your todolist"
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
@@ -80,7 +98,7 @@ const Home: React.FC = () => {
           </li>
         ))}
       </ul>
-    </Layout>
+    </div>
   );
 };
 
